@@ -6,6 +6,7 @@ import login from './services/login'
 import * as storage from './services/storage'
 import blogService, { setToken } from './services/blogs'
 import Message, { success, error } from './components/Message'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -46,8 +47,7 @@ const App = () => {
       setBlogs(blogs.concat(createdBlog))
       setMessage(success(`new blog: "${blog.title}" by ${blog.author}`))
     } catch (e) {
-      if (e.response.status === 400)
-        setMessage(error(e.response.data.error))
+      if (e.response.status === 400) setMessage(error(e.response.data.error))
     }
   }
 
@@ -68,7 +68,9 @@ const App = () => {
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
       </p>
-      <CreateBlogForm onCreateBlog={handleCreateBlog} />
+      <Togglable buttonLabel="new blog">
+        <CreateBlogForm onCreateBlog={handleCreateBlog} />
+      </Togglable>
       <BlogsList blogs={blogs} />
     </div>
   )
