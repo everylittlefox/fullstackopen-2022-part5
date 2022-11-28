@@ -46,3 +46,26 @@ test('shows details when view button is clicked', async () => {
   const texts = [...blogDetails.childNodes].map(c => c.textContent)
   expect(texts).toContain(blog.url)
 })
+
+test('like button fires event handler', async () => {
+  const blog = {
+    id: 1,
+    title: 'React patterns',
+    author: 'Michael Chan',
+    url: 'https://reactpatterns.com/',
+    likes: 7,
+    user: { name: 'root', username: 'root', id: 1 }
+  }
+
+  const mockOnLike = jest.fn()
+  render(<Blog blog={blog} onLike={mockOnLike} />)
+
+  const viewButton = screen.getByText('view')
+  await userEvent.click(viewButton)
+
+  const likeButton = screen.getByText('like')
+  await userEvent.click(likeButton)
+  await userEvent.click(likeButton)
+
+  expect(mockOnLike.mock.calls).toHaveLength(2)
+})
