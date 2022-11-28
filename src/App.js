@@ -13,6 +13,9 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
 
+  const sortedBlogs = [...blogs]
+  sortedBlogs.sort((a, b) => a.likes - b.likes)
+
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
@@ -85,7 +88,7 @@ const App = () => {
       <Togglable buttonLabel="new blog">
         <CreateBlogForm onCreateBlog={handleCreateBlog} />
       </Togglable>
-      <BlogsList onLike={handleLikeBlog} blogs={blogs} />
+      <BlogsList onLike={handleLikeBlog} blogs={sortedBlogs} />
     </div>
   )
 }
