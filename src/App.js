@@ -52,9 +52,17 @@ const App = () => {
   }
 
   const handleLikeBlog = async (blog) => {
-    const likedBlog = await blogService.likeBlog(blog)
-    console.log(likedBlog)
-    setBlogs(bs => bs.map(b => b.id === blog.id ? likedBlog : b))
+    setBlogs((bs) =>
+      bs.map((b) => (b.id === blog.id ? { ...b, likes: b.likes + 1 } : b))
+    )
+    try {
+      await blogService.likeBlog(blog)
+    } catch {
+      setMessage(error('an error occured'))
+      setBlogs((bs) =>
+        bs.map((b) => (b.id === blog.id ? { ...b, likes: b.likes - 1 } : b))
+      )
+    }
   }
 
   const clearMessage = () => setMessage(null)
