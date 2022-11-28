@@ -68,6 +68,20 @@ const App = () => {
     }
   }
 
+  const handleDeleteBlog = async (id) => {
+    const idx = blogs.findIndex(b => b.id === id)
+    const blogBackup = blogs[idx]
+
+    setBlogs(bs => bs.filter(b => b.id !== id))
+
+    try {
+      await blogService.deleteBlog(id)
+    } catch {
+      setMessage(error('an error occured'))
+      setBlogs(s => [...s.slice(0, idx), blogBackup, ...s.slice(idx)])
+    }
+  }
+
   const clearMessage = () => setMessage(null)
 
   if (!user)
@@ -88,7 +102,7 @@ const App = () => {
       <Togglable buttonLabel="new blog">
         <CreateBlogForm onCreateBlog={handleCreateBlog} />
       </Togglable>
-      <BlogsList onLike={handleLikeBlog} blogs={sortedBlogs} />
+      <BlogsList onDelete={handleDeleteBlog} onLike={handleLikeBlog} blogs={sortedBlogs} />
     </div>
   )
 }

@@ -40,5 +40,15 @@ const likeBlog = async (blog) => {
   ).data
 }
 
-const services = { getAll, createBlog, setToken, likeBlog }
+const deleteBlog = async (id) => {
+  if (!token) throw new Error('user token not set')
+
+  return await axios.delete(`${baseUrl}/${id}`, {
+    headers: {
+      Authorization: `bearer ${token}`
+    }
+  })
+}
+
+const services = { getAll, createBlog, setToken, likeBlog, deleteBlog }
 export default services
