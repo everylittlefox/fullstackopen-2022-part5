@@ -60,7 +60,7 @@ const App = () => {
     )
     try {
       await blogService.likeBlog(blog)
-    } catch {
+    } catch (e) {
       setMessage(error('an error occured'))
       setBlogs((bs) =>
         bs.map((b) => (b.id === blog.id ? { ...b, likes: b.likes - 1 } : b))
@@ -76,7 +76,7 @@ const App = () => {
 
     try {
       await blogService.deleteBlog(id)
-    } catch {
+    } catch (e) {
       setMessage(error('an error occured'))
       setBlogs(s => [...s.slice(0, idx), blogBackup, ...s.slice(idx)])
     }

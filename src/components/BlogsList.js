@@ -1,6 +1,6 @@
 import Blog from './Blog'
 
-const BlogsList = ({blogs, onLike, onDelete}) => {
+const BlogsList = ({ blogs, onLike, onDelete }) => {
   return (
     <div>
       {blogs.map((blog) => (

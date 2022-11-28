@@ -8,7 +8,11 @@ const blogStyle = {
   marginBottom: 5
 }
 
-const Blog = ({ blog: { title, author, url, likes, user, id }, onLike, onDelete }) => {
+const Blog = ({
+  blog: { title, author, url, likes, user, id },
+  onLike,
+  onDelete
+}) => {
   const [expanded, setExpanded] = useState(false)
   const buttonLabel = expanded ? 'hide' : 'view'
 
@@ -17,10 +21,10 @@ const Blog = ({ blog: { title, author, url, likes, user, id }, onLike, onDelete 
   const handleLike = () =>
     onLike({ title, author, url, likes, user: user.id, id })
 
-    const handleDelete = () => {
-      const toDelete = window.confirm(`Remove blog: "${title}" by ${author}?`)
-      if (toDelete) onDelete(id)
-    }
+  const handleDelete = () => {
+    const toDelete = window.confirm(`Remove blog: "${title}" by ${author}?`)
+    if (toDelete) onDelete(id)
+  }
 
   return (
     <div style={blogStyle}>
