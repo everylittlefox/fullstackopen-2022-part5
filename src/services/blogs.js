@@ -3,7 +3,7 @@ const baseUrl = '/api/blogs'
 
 let token = null
 
-export const setToken = (t) => {
+const setToken = (t) => {
   token = t
 }
 
@@ -12,13 +12,33 @@ const getAll = async () => {
   return res.data
 }
 
-const createBlog = async blog => {
+const createBlog = async (blog) => {
   if (!token) throw new Error('user token not set')
 
-  return (await axios.post(baseUrl, blog, { headers: {
-    Authorization: `bearer ${token}`
-  }})).data
+  return (
+    await axios.post(baseUrl, blog, {
+      headers: {
+        Authorization: `bearer ${token}`
+      }
+    })
+  ).data
 }
 
-const services = { getAll, createBlog }
+const likeBlog = async (blog) => {
+  if (!token) throw new Error('user token not set')
+
+  return (
+    await axios.put(
+      `${baseUrl}/${blog.id}`,
+      { ...blog, likes: blog.likes + 1 },
+      {
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      }
+    )
+  ).data
+}
+
+const services = { getAll, createBlog, setToken, likeBlog }
 export default services

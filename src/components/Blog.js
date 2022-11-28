@@ -8,11 +8,14 @@ const blogStyle = {
   marginBottom: 5
 }
 
-const Blog = ({ blog: { title, author, url, likes, user } }) => {
+const Blog = ({ blog: { title, author, url, likes, user, id }, onLike }) => {
   const [expanded, setExpanded] = useState(false)
   const buttonLabel = expanded ? 'hide' : 'view'
 
   const toggleExpanded = () => setExpanded(!expanded)
+
+  const handleLike = () =>
+    onLike({ title, author, url, likes, user: user.id, id })
 
   return (
     <div style={blogStyle}>
@@ -23,7 +26,7 @@ const Blog = ({ blog: { title, author, url, likes, user } }) => {
         <div>
           <p>{url}</p>
           <p>
-            likes {likes} <button>like</button>
+            likes {likes} <button onClick={handleLike}>like</button>
           </p>
           <p>{user.name}</p>
         </div>

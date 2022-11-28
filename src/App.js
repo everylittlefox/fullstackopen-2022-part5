@@ -4,7 +4,7 @@ import CreateBlogForm from './components/CreateBlogForm'
 import LoginForm from './components/LoginForm'
 import login from './services/login'
 import * as storage from './services/storage'
-import blogService, { setToken } from './services/blogs'
+import blogService from './services/blogs'
 import Message, { success, error } from './components/Message'
 import Togglable from './components/Togglable'
 
@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     const user = storage.retrieveUser()
     if (user) {
-      setToken(user.token)
+      blogService.setToken(user.token)
       setUser(user)
     }
   }, [])
@@ -28,7 +28,7 @@ const App = () => {
   const handleLogin = async (username, password) => {
     try {
       const user = await login(username, password)
-      setToken(user.token)
+      blogService.setToken(user.token)
       setUser(user)
     } catch (e) {
       if (e.response.status === 401)
@@ -51,6 +51,12 @@ const App = () => {
     }
   }
 
+  const handleLikeBlog = async (blog) => {
+    const likedBlog = await blogService.likeBlog(blog)
+    console.log(likedBlog)
+    setBlogs(bs => bs.map(b => b.id === blog.id ? likedBlog : b))
+  }
+
   const clearMessage = () => setMessage(null)
 
   if (!user)
@@ -71,7 +77,7 @@ const App = () => {
       <Togglable buttonLabel="new blog">
         <CreateBlogForm onCreateBlog={handleCreateBlog} />
       </Togglable>
-      <BlogsList blogs={blogs} />
+      <BlogsList onLike={handleLikeBlog} blogs={blogs} />
     </div>
   )
 }
