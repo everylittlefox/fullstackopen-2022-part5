@@ -28,11 +28,11 @@ const Blog = ({
 
   return (
     <div style={blogStyle}>
-      <div>
+      <div className='blog-summary'>
         {title} {author} <button onClick={toggleExpanded}>{buttonLabel}</button>
       </div>
       {expanded && (
-        <div>
+        <div className='blog-expanded-details'>
           <p>{url}</p>
           <p>
             likes {likes} <button onClick={handleLike}>like</button>
