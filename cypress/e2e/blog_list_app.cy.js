@@ -30,5 +30,26 @@ describe('Blog app', function () {
       cy.get('button').click()
       cy.contains('wrong username or password').should('have.class', 'error')
     })
+
+    describe('When logged in', function () {
+      beforeEach(function () {
+        cy.get('[name="username"]').type('root')
+        cy.get('[name="password"]').type('root')
+        cy.get('button').click()
+      })
+
+      it('A blog can be created', function () {
+        cy.contains('new blog').click()
+        cy.get('[name="title"]').type('new title')
+        cy.get('[name="author"]').type('new author')
+        cy.get('[name="url"]').type('new url')
+        cy.get('[type="submit"]').click()
+
+        cy.contains('new blog: "new title" by new author').should(
+          'have.class',
+          'success'
+        )
+      })
+    })
   })
 })
