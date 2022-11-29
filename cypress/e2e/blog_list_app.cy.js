@@ -72,6 +72,25 @@ describe('Blog app', function () {
 
           cy.get('.blogs').children().should('have.length', 0)
         })
+
+        it('Blogs are sorted by likes in descending order', function () {
+          cy.wait(7000)
+
+          cy.get('[name="title"]').type('second blog title')
+          cy.get('[name="author"]').type('second blog author')
+          cy.get('[name="url"]').type('second blog url')
+          cy.get('[type="submit"]').click()
+
+          cy.wait(7000)
+
+          cy.get('div:last-child > .blog-summary').contains('view').click()
+          cy.get('.like-button').click()
+
+          cy.wait(5000)
+
+          cy.get('.blog').eq(0).should('contain', 'second blog title')
+          cy.get('.blog').eq(1).should('contain', 'first blog title')
+        })
       })
     })
   })

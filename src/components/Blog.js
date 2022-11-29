@@ -27,7 +27,7 @@ const Blog = ({
   }
 
   return (
-    <div style={blogStyle}>
+    <div className='blog' style={blogStyle}>
       <div className='blog-summary'>
         {title} {author} <button onClick={toggleExpanded}>{buttonLabel}</button>
       </div>
