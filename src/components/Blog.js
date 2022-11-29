@@ -35,7 +35,7 @@ const Blog = ({
         <div className='blog-expanded-details'>
           <p>{url}</p>
           <p>
-            likes {likes} <button onClick={handleLike}>like</button>
+            likes {likes} <button className='like-button' onClick={handleLike}>like</button>
           </p>
           <p>{user.name}</p>
           <button onClick={handleDelete}>remove</button>

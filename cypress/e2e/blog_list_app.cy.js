@@ -50,6 +50,27 @@ describe('Blog app', function () {
           'success'
         )
       })
+
+      describe('operating on blogs', function () {
+        beforeEach(function () {
+          cy.contains('new blog').click()
+          cy.get('[name="title"]').type('first blog title')
+          cy.get('[name="author"]').type('first blog author')
+          cy.get('[name="url"]').type('first blog url')
+          cy.get('[type="submit"]').click()
+
+          cy.get('[name="title"]').type('second blog title')
+          cy.get('[name="author"]').type('second blog author')
+          cy.get('[name="url"]').type('second blog url')
+          cy.get('[type="submit"]').click()
+        })
+
+        it('A blog can be liked', function () {
+          cy.contains('view').click()
+          cy.get('.like-button').click()
+          cy.contains('likes 1')
+        })
+      })
     })
   })
 })
