@@ -58,17 +58,19 @@ describe('Blog app', function () {
           cy.get('[name="author"]').type('first blog author')
           cy.get('[name="url"]').type('first blog url')
           cy.get('[type="submit"]').click()
-
-          cy.get('[name="title"]').type('second blog title')
-          cy.get('[name="author"]').type('second blog author')
-          cy.get('[name="url"]').type('second blog url')
-          cy.get('[type="submit"]').click()
         })
 
         it('A blog can be liked', function () {
           cy.contains('view').click()
           cy.get('.like-button').click()
           cy.contains('likes 1')
+        })
+
+        it('A blog can be deleted', function () {
+          cy.contains('view').click()
+          cy.contains('remove').click()
+
+          cy.get('.blogs').children().should('have.length', 1)
         })
       })
     })
