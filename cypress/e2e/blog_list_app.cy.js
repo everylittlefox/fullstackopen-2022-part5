@@ -70,7 +70,7 @@ describe('Blog app', function () {
           cy.contains('view').click()
           cy.contains('remove').click()
 
-          cy.get('.blogs').children().should('have.length', 1)
+          cy.get('.blogs').children().should('have.length', 0)
         })
       })
     })
