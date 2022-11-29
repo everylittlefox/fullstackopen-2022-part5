@@ -14,7 +14,7 @@ const App = () => {
   const [message, setMessage] = useState(null)
 
   const sortedBlogs = [...blogs]
-  sortedBlogs.sort((a, b) => a.likes - b.likes)
+  sortedBlogs.sort((a, b) => b.likes - a.likes)
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
